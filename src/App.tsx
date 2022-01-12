@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { AppBar, Toolbar, Typography } from "@mui/material";
+import { CountriesGrid, Loading } from './compoonents';
+import { useAsiaCountries } from './utils';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const countries = useAsiaCountries();
+
+  if (countries === undefined) {
+    return (
+      <Loading />
+    );
+  } else {
+    return (
+      <div>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit" component="div">
+              Countries
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <CountriesGrid countries={countries} />
+      </div>
+    );
+  }
 }
 
 export default App;
